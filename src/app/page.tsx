@@ -1,4 +1,13 @@
 import Image from "next/image";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
 
 export default function Home() {
   return (
@@ -9,6 +18,41 @@ export default function Home() {
         <p className="text-muted-foreground">
           A platform to sell digital goods using your World ID and creator provenance and rights using on-chain attestations.
         </p>
+      </div>
+      <div className="grid grid-cols-3 gap-8 px-20 py-8 ">
+        <Card className="shadow-sm border-none h-full w-full bg-violet-400 rounded-lg bg-opacity-15 border cursor-pointer transform transition-transform duration-300 ease-in-out hover:scale-110">
+          <CardHeader>
+            <CardDescription className="text-center pt-1 text-lg font-semibold text-black">
+              This is a sample feature for Origyn.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+        <Card className="shadow-sm border-none h-full w-full bg-violet-400 rounded-lg bg-opacity-15 border cursor-pointer transform transition-transform duration-300 ease-in-out hover:scale-110">
+          <CardHeader>
+            <CardDescription className="text-center pt-1 text-lg font-semibold text-black">
+              This is a sample feature for Origyn.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+        <Card className="shadow-sm border-none h-full w-full bg-violet-400 rounded-lg bg-opacity-15 border cursor-pointer transform transition-transform duration-300 ease-in-out hover:scale-110">
+          <CardHeader>
+            <CardDescription className="text-center pt-1 text-lg font-semibold text-black">
+              This is a sample feature for Origyn.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+      <div className="fixed container mx-auto bottom-4">
+        <hr className="border-t-1 border-slate-600 mb-4" />
+        <div className="flex justify-center items-center">
+          <p className="text-muted-foreground">
+            &copy;{" "}
+            <a href="https://www.alphadevs.dev/" target="_blank">
+              Team AlphaDevs
+            </a>{" "}
+            | All rights reserved.
+          </p>
+        </div>
       </div>
     </main>
   );
