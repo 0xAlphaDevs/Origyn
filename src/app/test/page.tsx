@@ -1,45 +1,63 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { IDKitWidget, VerificationLevel, ISuccessResult } from '@worldcoin/idkit'
-import { Button } from '@/components/ui/button';
+import { VerificationLevel, IDKitWidget, useIDKit } from "@worldcoin/idkit";
+import type { ISuccessResult } from "@worldcoin/idkit";
+import { verify } from "./actions/verify";
 
-const handleVerify = async (proof: ISuccessResult) => {
-  const res = await fetch("/api/test", { // route to your backend will depend on implementation
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(proof),
-  })
-  if (!res.ok) {
-    throw new Error("Verification failed."); // IDKit will display the error message to the user in the modal
+export default function Home() {
+  const app_id = process.env.NEXT_PUBLIC_WLD_APP_ID as `app_${string}`;
+  const action = process.env.NEXT_PUBLIC_WLD_ACTION;
+
+  if (!app_id) {
+    throw new Error("app_id is not set in environment variables!");
   }
-};
+  if (!action) {
+    throw new Error("action is not set in environment variables!");
+  }
 
-const onSuccess = () => {
-  // This is where you should perform any actions after the modal is closed
-  // Such as redirecting the user to a new page
-  window.location.href = "/creator/dashboard";
-};
+  const { setOpen } = useIDKit();
 
-const Test = () => {
+  const onSuccess = (result: ISuccessResult) => {
+    // This is where you should perform frontend actions once a user has been verified, such as redirecting to a new page
+    window.alert(
+      "Successfully verified with World ID! Your nullifier hash is: " +
+        result.nullifier_hash
+    );
+  };
+
+  const handleProof = async (result: ISuccessResult) => {
+    console.log(
+      "Proof received from IDKit, sending to backend:\n",
+      JSON.stringify(result)
+    ); // Log the proof from IDKit to the console for visibility
+    const data = await verify(result);
+    console.log("Response from backend:\n", JSON.stringify(data)); // Log the response from the backend for visibility
+
+    if (data.success) {
+      console.log("Successful response from backend:\n", JSON.stringify(data)); // Log the response from our backend for visibility
+    } else {
+      throw new Error(`Verification failed: ${data.detail}`);
+    }
+  };
+
   return (
-    <div className='flex justify-center items-center h-screen'>
-      <IDKitWidget
-        app_id="app_staging_c0c4d33bb22c3c08f1c22003372e8bd0"// obtained from the Developer Portal
-        action="origyn-signin" // obtained from the Developer Portal
-        onSuccess={onSuccess} // callback when the modal is closed
-        handleVerify={handleVerify} // callback when the proof is received
-        verification_level={VerificationLevel.Orb}
-      >
-        {({ open }) =>
-          // This is the button that will open the IDKit modal
-          <Button onClick={open}>Verify with World ID</Button>
-        }
-      </IDKitWidget>
+    <div>
+      <div className="flex flex-col items-center justify-center align-middle h-screen">
+        <p className="text-2xl mb-5">World ID Cloud Template</p>
+        <IDKitWidget
+          action={action}
+          app_id={app_id}
+          onSuccess={onSuccess}
+          handleVerify={handleProof}
+          verification_level={VerificationLevel.Orb} // Change this to VerificationLevel.Device to accept Orb- and Device-verified users
+        />
+        <button
+          className="border border-black rounded-md"
+          onClick={() => setOpen(true)}
+        >
+          <div className="mx-3 my-1">Verify with World ID</div>
+        </button>
+      </div>
     </div>
-  )
+  );
 }
-
-export default Test
