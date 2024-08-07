@@ -1,10 +1,11 @@
 'use client'
 
-import { IDKitWidget, VerificationLevel, ISuccessResult } from '@worldcoin/idkit'
 import React from 'react'
+import { IDKitWidget, VerificationLevel, ISuccessResult } from '@worldcoin/idkit'
+import { Button } from '@/components/ui/button';
 
 const handleVerify = async (proof: ISuccessResult) => {
-  const res = await fetch("/api", { // route to your backend will depend on implementation
+  const res = await fetch("/api/test", { // route to your backend will depend on implementation
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -19,25 +20,25 @@ const handleVerify = async (proof: ISuccessResult) => {
 const onSuccess = () => {
   // This is where you should perform any actions after the modal is closed
   // Such as redirecting the user to a new page
-  window.location.href = "/success";
+  window.location.href = "/creator/dashboard";
 };
-
 
 const Test = () => {
   return (
-    <IDKitWidget
-      app_id="app_staging_c0c4d33bb22c3c08f1c22003372e8bd0" // obtained from the Developer Portal
-      action="your action id" // obtained from the Developer Portal
-      onSuccess={onSuccess} // callback when the modal is closed
-      handleVerify={handleVerify} // callback when the proof is received
-      verification_level={VerificationLevel.Orb}
-    >
-      {({ open }) =>
-        // This is the button that will open the IDKit modal
-        <button onClick={open}>Verify with World ID</button>
-      }
-    </IDKitWidget>
-
+    <div className='flex justify-center items-center h-screen'>
+      <IDKitWidget
+        app_id="app_staging_c0c4d33bb22c3c08f1c22003372e8bd0"// obtained from the Developer Portal
+        action="origyn-signin" // obtained from the Developer Portal
+        onSuccess={onSuccess} // callback when the modal is closed
+        handleVerify={handleVerify} // callback when the proof is received
+        verification_level={VerificationLevel.Orb}
+      >
+        {({ open }) =>
+          // This is the button that will open the IDKit modal
+          <Button onClick={open}>Verify with World ID</Button>
+        }
+      </IDKitWidget>
+    </div>
   )
 }
 
