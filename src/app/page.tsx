@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import {
   Card,
@@ -7,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { ConnectKitButton } from "connectkit";
 
 
 export default function Home() {
@@ -19,6 +22,7 @@ export default function Home() {
           A platform to sell digital goods using your World ID and creator provenance and rights using on-chain attestations.
         </p>
       </div>
+      <ConnectKitButton />
       <div className="grid grid-cols-3 gap-8 px-20 py-8 ">
         <Card className="shadow-sm border-none h-full w-full bg-violet-400 rounded-lg bg-opacity-15 border cursor-pointer transform transition-transform duration-300 ease-in-out hover:scale-110">
           <CardHeader>
