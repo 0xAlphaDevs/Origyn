@@ -4,7 +4,7 @@ import { IDKitWidget, VerificationLevel, ISuccessResult } from '@worldcoin/idkit
 import React from 'react'
 
 const handleVerify = async (proof: ISuccessResult) => {
-  const res = await fetch("/api/verify", { // route to your backend will depend on implementation
+  const res = await fetch("/api", { // route to your backend will depend on implementation
     method: "POST",
     headers: {
       "Content-Type": "application/json",
