@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useAccount, useReadContract, useReadContracts } from "wagmi";
 import { Badge } from "../ui/badge";
 import { products } from "@/lib/dummyData";
+import Image from "next/image";
 
 interface MarketplaceProductCard {
 
@@ -64,36 +65,37 @@ const MarketplaceProductCard = ({ courseNftAddress }: any) => {
   // }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-y-24 gap-x-8 ">
       {products.map((product) => (
-        <Card key={product.nftAddress} className="shadow-md">
-          <CardHeader>
-            <CardTitle className="flex justify-between items-center">
-              <p>{product.name}</p>
-              <div className="flex gap-2 items-center">
-                <div className="text-sm">Product ID :</div>
-                <Badge>{product.id}</Badge>
-              </div>
-            </CardTitle>
-            <CardDescription>
-              <p>{product.description}</p>
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex justify-between items-center">
-            <p className="text-muted-foreground">
-              Price:{" "}
-              <strong className="text-lg font-bold">
-                {product.price}
-              </strong>
-            </p>
-            <Button onClick={() => handleViewProduct(product.id)}>
-              View Product
-            </Button>
-          </CardContent>
-        </Card>
+        <div key={product.nftAddress} className="relative shadow-lg border">
+          <Image src={product.src} width={150} height={150} alt="Logo" className="opacity-75 w-full rounded-lg" />
+          <Card className="shadow-md absolute bottom-8 left-0 right-0 transform translate-y-1/2">
+            <CardHeader>
+              <CardTitle className="flex justify-between items-center">
+                <span>{product.name}</span>
+                <div className="flex gap-2 items-center">
+                  <Badge>{product.id}</Badge>
+                </div>
+              </CardTitle>
+              <CardDescription>
+                {product.description}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-2">
+              <p className="text-muted-foreground">
+                Price:{" "}
+                <strong className="text-lg font-bold">
+                  {product.price}
+                </strong>
+              </p>
+              <Button onClick={() => handleViewProduct(product.id)}>
+                View Product
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
       ))}
     </div>
-
   );
 };
 
