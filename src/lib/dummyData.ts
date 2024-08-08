@@ -1,6 +1,6 @@
 export const products = [
   {
-    id: "1",
+    id: "1dgfhnmnk;/",
     name: "Product 1",
     description: "Description for Product 1",
     price: "10.00",
@@ -8,7 +8,7 @@ export const products = [
     src: "/sample.jpg",
   },
   {
-    id: "2",
+    id: "2ghklnmbvh",
     name: "Product 2",
     description: "Description for Product 2",
     price: "20.00",
@@ -16,7 +16,7 @@ export const products = [
     src: "/sample.jpg",
   },
   {
-    id: "3",
+    id: "3cvghbv ",
     name: "Product 2",
     description: "Description for Product 2",
     price: "20.00",
@@ -24,7 +24,7 @@ export const products = [
     src: "/sample.jpg",
   },
   {
-    id: "4",
+    id: "4cxgvhnj ",
     name: "Product 2",
     description: "Description for Product 2",
     price: "20.00",
@@ -32,7 +32,7 @@ export const products = [
     src: "/sample.jpg",
   },
   {
-    id: "5",
+    id: "5dfdghnb ",
     name: "Product 2",
     description: "Description for Product 2",
     price: "20.00",
@@ -40,7 +40,7 @@ export const products = [
     src: "/sample.jpg",
   },
   {
-    id: "6",
+    id: "6fdhgnjbm",
     name: "Product 2",
     description: "Description for Product 2",
     price: "20.00",
@@ -48,7 +48,7 @@ export const products = [
     src: "/sample.jpg",
   },
   {
-    id: "7",
+    id: "7xfghjbmn",
     name: "Product 2",
     description: "Description for Product 2",
     price: "20.00",
@@ -56,7 +56,7 @@ export const products = [
     src: "/sample.jpg",
   },
   {
-    id: "8",
+    id: "8xfhgjmn",
     name: "Product 2",
     description: "Description for Product 2",
     price: "20.00",
