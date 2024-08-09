@@ -6,7 +6,7 @@ import { useReadContract, useAccount, useBalance } from "wagmi";
 
 const CreatorWallet = () => {
   const { address } = useAccount();
-  const [accountBalance, setUSDBalance] = React.useState<number>(0);
+  const [usdBalance, setUsdBalance] = React.useState<number>(0);
 
   // const { data: balance } = useReadContract({
   //   address: ,
@@ -19,8 +19,8 @@ const CreatorWallet = () => {
 
   // useMemo(() => {
   //   if (balance) {
-  //     const accountBalance = Number(balance) / 10 ** 18;
-  //     setUSDBalance(accountBalance);
+  //     const usdBalance = Number(balance) / 10 ** 18;
+  //     setUsdBalance(usdBalance);
   //   }
   // }, [balance]);
 
@@ -33,10 +33,10 @@ const CreatorWallet = () => {
       <div className="flex justify-around">
         <Card className="flex flex-col gap-4 p-4 shadow-md w-96">
           <CardDescription> Current balance </CardDescription>
-          {!accountBalance ? (
+          {!usdBalance ? (
             <Skeleton className="h-8 w-28 rounded-lg" />
           ) : (
-            <CardTitle> {accountBalance} </CardTitle>
+            <CardTitle> {usdBalance} USD</CardTitle>
           )}
 
           <CardDescription> ETH Balance </CardDescription>

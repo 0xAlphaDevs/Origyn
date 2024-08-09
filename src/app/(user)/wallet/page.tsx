@@ -12,7 +12,7 @@ import {
 
 const UserWallet = () => {
   const { address } = useAccount();
-  const [accountBalance, setAccountBalance] = React.useState<number>(0);
+  const [usdBalance, setUsdBalance] = React.useState<number>(0);
   // TO DO : Remove this later
   const [isLoading, setIsLoading] = React.useState(false);
   const { error, isPending, writeContract } = useWriteContract();
@@ -28,8 +28,8 @@ const UserWallet = () => {
 
   // useMemo(() => {
   //   if (balance) {
-  //     const accountBalance = Number(balance) / 10 ** 18;
-  //     setAccountBalance(accountBalance);
+  //     const usdBalance = Number(balance) / 10 ** 18;
+  //     setUsdBalance(usdBalance);
   //   }
   // }, [balance]);
 
@@ -54,7 +54,7 @@ const UserWallet = () => {
           {isLoading ? (
             <Skeleton className="h-8 w-28 rounded-lg" />
           ) : (
-            <CardTitle> {accountBalance} </CardTitle>
+            <CardTitle> {usdBalance} USD</CardTitle>
           )}
 
           <CardDescription> ETH Balance </CardDescription>
