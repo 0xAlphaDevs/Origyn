@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useCallback } from 'react'
-import { Button } from "@/components/ui/button"
+import React, { useState, useCallback } from "react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,38 +9,56 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { CheckCircleIcon } from "lucide-react"
-import Spinner from '../spinner';
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { CheckCircleIcon } from "lucide-react";
+import Spinner from "../spinner";
 
 const AddNewProduct = () => {
-  const [productName, setProductName] = useState('')
-  const [productDescription, setProductDescription] = useState('')
-  const [productPrice, setProductPrice] = useState('')
-  const [file, setFile] = useState<File | null>(null)
-  const [isDragging, setIsDragging] = useState(false)
-  const [formData, setFormData] = useState<any>(null)
-  const [isPending, setIsPending] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
+  const [productName, setProductName] = useState("");
+  const [productDescription, setProductDescription] = useState("");
+  const [productPrice, setProductPrice] = useState("");
+  const [fileContents, setFileContents] = useState<File | null>(null);
+  const [displayImage, setDisplayImage] = useState<File | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [formData, setFormData] = useState<any>(null);
+  const [isPending, setIsPending] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [currentStep, setCurrentStep] = useState("Uploading display image...");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsPending(true);
     try {
       // Simulating an async operation
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // await new Promise((resolve) => setTimeout(resolve, 2000));
 
       const newProduct = {
         id: Date.now(),
         productName,
         productDescription,
         productPrice,
-        file: file ? file.name : null
+        fileContents: fileContents ? fileContents.name : null,
+        displayImage: displayImage ? displayImage.name : null,
       };
       setFormData(newProduct);
       console.log("New product added:", newProduct);
+
+      // 1. Upload the display image to the server
+      // 2. Upload the file contents using encrypt File server action
+      // 3. Attest the product details on-chain
+      // 4. Index the product details in database
+
+      // Simulating the above steps
+      setCurrentStep("Uploading display image...");
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      setCurrentStep("Uploading file contents...");
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      setCurrentStep("Creating on-chain attestation...");
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      setCurrentStep("Indexing product details...");
+      await new Promise((resolve) => setTimeout(resolve, 500));
       setIsSuccess(true);
     } catch (error) {
       alert("An error occurred while adding the product.");
@@ -52,33 +70,55 @@ const AddNewProduct = () => {
   const handleDrag = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
+    if (e.type === "dragenter" || e.type === "dragover") {
       setIsDragging(true);
-    } else if (e.type === 'dragleave') {
+    } else if (e.type === "dragleave") {
       setIsDragging(false);
     }
   }, []);
 
-  const handleDrop = useCallback((e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFile(e.dataTransfer.files[0]);
-    }
-  }, []);
+  const handleDisplayImageDrop = useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        setDisplayImage(e.dataTransfer.files[0]);
+      }
+    },
+    []
+  );
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDisplayImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
+      setDisplayImage(e.target.files[0]);
+    }
+  };
+
+  const handleFileContentsDrop = useCallback(
+    (e: React.DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setIsDragging(false);
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        setFileContents(e.dataTransfer.files[0]);
+      }
+    },
+    []
+  );
+
+  const handleFileContentsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFileContents(e.target.files[0]);
     }
   };
 
   const resetForm = () => {
-    setProductName('');
-    setProductDescription('');
-    setProductPrice('');
-    setFile(null);
+    setProductName("");
+    setProductDescription("");
+    setProductPrice("");
+    setDisplayImage(null);
+    setFileContents(null);
     setIsSuccess(false);
   };
 
@@ -89,14 +129,19 @@ const AddNewProduct = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         {isPending ? (
-          <div className="flex justify-center items-center h-96">
+          <div className="flex flex-col justify-center items-center h-96">
             <Spinner />
+            <p className="font-bold text-lg text-muted-foreground mt-4">
+              {currentStep}
+            </p>
           </div>
         ) : isSuccess ? (
           <div className="flex flex-col justify-center gap-4 items-center text-green-500 h-96">
             <CheckCircleIcon className="h-12 w-12" />
             <p className="font-semibold text-lg">Product Added Successfully</p>
-            <Button onClick={resetForm} className="absolute bottom-8">Add Another Product</Button>
+            <Button onClick={resetForm} className="absolute bottom-8">
+              Add Another Product
+            </Button>
           </div>
         ) : (
           <>
@@ -146,35 +191,83 @@ const AddNewProduct = () => {
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
-                  <Label className="text-right">
-                    Product Image
-                  </Label>
+                  <Label className="text-right">Product Display Image</Label>
                   <div
-                    className={`col-span-3 border-2 border-dashed rounded-md p-4 text-center cursor-pointer ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-gray-300'}`}
+                    className={`col-span-3 border-2 border-dashed rounded-md p-4 text-center cursor-pointer ${
+                      isDragging
+                        ? "border-blue-500 bg-blue-50"
+                        : "border-gray-300"
+                    }`}
                     onDragEnter={handleDrag}
                     onDragLeave={handleDrag}
                     onDragOver={handleDrag}
-                    onDrop={handleDrop}
-                    onClick={() => document.getElementById('fileInput')?.click()}
+                    onDrop={handleDisplayImageDrop}
+                    onClick={() =>
+                      document.getElementById("displayImageInput")?.click()
+                    }
                   >
                     <input
-                      id="fileInput"
+                      id="displayImageInput"
                       type="file"
                       accept="image/*"
-                      onChange={handleFileChange}
-                      style={{ display: 'none' }}
+                      onChange={handleDisplayImageChange}
+                      style={{ display: "none" }}
                     />
-                    {file ? file.name : 'Drag and drop an image here, or click to select'}
+                    {displayImage ? (
+                      displayImage?.name
+                    ) : (
+                      <p className="text-muted-foreground">
+                        Select a display image for your product
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label className="text-right">File Contents</Label>
+                  <div
+                    className={`col-span-3 border-2 border-dashed rounded-md p-4 text-center cursor-pointer ${
+                      isDragging
+                        ? "border-blue-500 bg-blue-50"
+                        : "border-gray-300"
+                    }`}
+                    onDragEnter={handleDrag}
+                    onDragLeave={handleDrag}
+                    onDragOver={handleDrag}
+                    onDrop={handleFileContentsDrop}
+                    onClick={() =>
+                      document.getElementById("fileContentsInput")?.click()
+                    }
+                  >
+                    <input
+                      id="fileContentsInput"
+                      type="file"
+                      accept="*"
+                      onChange={handleFileContentsChange}
+                      style={{ display: "none" }}
+                    />
+                    {fileContents ? (
+                      fileContents?.name
+                    ) : (
+                      <p className="text-muted-foreground">
+                        Drag and drop your file contents here, or click to
+                        select
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
-              <Button type="submit" className='w-full bg-green-600 hover:bg-green-400'>Add Product</Button>
+              <Button
+                type="submit"
+                className="w-full bg-green-600 hover:bg-green-400"
+              >
+                Add Product
+              </Button>
             </form>
           </>
         )}
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};
 
-export default AddNewProduct
+export default AddNewProduct;
