@@ -1,3 +1,4 @@
+"use client";
 import React, { useMemo } from "react";
 import {
   Card,
@@ -9,15 +10,11 @@ import { Button } from "@/components/ui/button";
 import { useAccount, useReadContracts, useWriteContract } from "wagmi";
 import { Skeleton } from "../ui/skeleton";
 
-interface Product {
-
-}
+interface Product {}
 
 const EarningsProductCard = ({ ProductId }: any) => {
   const { address } = useAccount();
-  const [product, setProduct] = React.useState<Product>({
-
-  });
+  const [product, setProduct] = React.useState<Product>({});
   const { error, isPending, isSuccess, writeContract } = useWriteContract();
 
   // const {
@@ -85,8 +82,7 @@ const EarningsProductCard = ({ ProductId }: any) => {
               Product code : <strong className="text-lg">zxcv</strong>
             </p>
             <p>
-              Product earnings :{" "}
-              <strong className="text-lg">100</strong>
+              Product earnings : <strong className="text-lg">100</strong>
             </p>
           </CardDescription>
         </div>

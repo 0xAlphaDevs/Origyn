@@ -97,7 +97,7 @@ export function EarningChart({ productEarnings }: any) {
     //                     y={(viewBox.cy || 0) + 24}
     //                     className="fill-muted-foreground"
     //                   >
-    //                     PHT Earned
+    //                     USD Earned
     //                   </tspan>
     //                 </text>
     //               );
