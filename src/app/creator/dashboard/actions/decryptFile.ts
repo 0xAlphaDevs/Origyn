@@ -4,9 +4,14 @@
 import crypto from "crypto";
 
 export async function decryptFile(
-  cid: string,
-  walletAddress: string,
-  signature: string
+  // cid: string,
+  // walletAddress: string,
+  // signature: string,
+  encryptedData: {
+    iv: string;
+    content: string;
+    filename: string;
+  }
 ) {
   // Get the encryption key from environment variable
   const encryptionKey = process.env.ENCRYPTION_KEY;
@@ -21,7 +26,7 @@ export async function decryptFile(
 
   try {
     // Download the encrypted file from IPFS
-    const encryptedData = await downloadFromIPFS(cid);
+    // const encryptedData = await downloadFromIPFS(cid);
 
     // Convert the encryption key to a buffer
     const keyBuffer = Buffer.from(encryptionKey, "hex");
@@ -38,6 +43,8 @@ export async function decryptFile(
 
     // Convert the decrypted data to a base64 string
     const decryptedBase64 = decrypted.toString("base64");
+
+    console.log("Decrypted data:", decryptedBase64);
 
     return {
       success: true,

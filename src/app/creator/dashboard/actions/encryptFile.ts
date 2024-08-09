@@ -1,16 +1,25 @@
 "use server";
 
 import { createCipheriv, randomBytes } from "crypto";
+import { decryptFile } from "./decryptFile";
 
-export async function encryptFile(fileBuffer: Buffer, filename: string) {
+export async function encryptFile(fileBase64: string, filename: string) {
+  console.log("Encrypting file:", filename);
+  console.log("File :", fileBase64);
+
   // Get the encryption key from environment variable
   const encryptionKey = process.env.ENCRYPTION_KEY;
+
+  console.log("Encryption key:", encryptionKey);
 
   if (!encryptionKey) {
     throw new Error("Encryption key not found in environment variables");
   }
 
   try {
+    // Convert the base64 string back to a buffer
+    const fileBuffer = Buffer.from(fileBase64, "base64");
+
     // Convert the encryption key to a buffer
     const keyBuffer = Buffer.from(encryptionKey, "hex");
 
@@ -37,15 +46,23 @@ export async function encryptFile(fileBuffer: Buffer, filename: string) {
     return {
       status: status,
       cid: cid,
+      message: "success",
     };
   } catch (error) {
     console.error("Encryption and upload failed:", error);
-    throw error;
+    return { status: false, message: "Encryption and upload failed" };
   }
 }
 
-async function uploadToIPFS(data: Object) {
-  // Use thirdweb's SDK to upload to IPFS
+async function uploadToIPFS(data: {
+  iv: string;
+  content: string;
+  filename: string;
+}) {
+  // TO DO : Use thirdweb's SDK to upload to IPFS
+  console.log("Uploading to IPFS:", data);
+  // TESTING : Test decryption as well here
+  // await decryptFile(data);
   // Return the IPFS hash or other relevant information
-  return { cid: "QmXyZ", status: true };
+  return { cid: "file_contents_cid", status: true, message: "success" };
 }
