@@ -36,7 +36,7 @@ const Navbar: React.FC<NavbarProps> = ({ links, supText }) => {
                 alt="Picture of the author"
               />
               <span className="text-3xl">
-                Oriygn
+                Origyn
                 <sup className="text-sm font-semibold absolute ml-2 mt-4">
                   {supText}
                 </sup>
@@ -49,8 +49,9 @@ const Navbar: React.FC<NavbarProps> = ({ links, supText }) => {
                 <Link
                   key={index}
                   href={link.href}
-                  className={`flex items-center gap-3 rounded-lg px-3 text-lg py-2 my-2 transition-all hover:bg-slate-200 ${pathname === link.href ? "bg-slate-300" : ""
-                    }`}
+                  className={`flex items-center gap-3 rounded-lg px-3 text-lg py-2 my-2 transition-all hover:bg-slate-200 ${
+                    pathname === link.href ? "bg-slate-300" : ""
+                  }`}
                   prefetch={false}
                 >
                   {link.image}
