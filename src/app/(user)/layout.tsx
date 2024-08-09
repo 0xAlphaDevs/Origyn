@@ -1,5 +1,5 @@
 import Navbar from "@/components/navbar"
-import { GlobeLockIcon, ShoppingCartIcon } from "lucide-react";
+import { GlobeLockIcon, ShoppingCartIcon, WalletIcon } from "lucide-react";
 
 const links = [
   {
@@ -13,6 +13,11 @@ const links = [
     text: "My Purchases",
     image: <ShoppingCartIcon className="h-6 w-6" />,
 
+  },
+  {
+    href: "/wallet",
+    text: "Wallet",
+    image: <WalletIcon className="h-6 w-6" />,
   },
 ];
 

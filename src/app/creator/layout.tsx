@@ -1,5 +1,5 @@
 import Navbar from "@/components/navbar"
-import { CircleDollarSignIcon, LayoutDashboardIcon, } from "lucide-react";
+import { CircleDollarSignIcon, LayoutDashboardIcon, WalletIcon } from "lucide-react";
 
 const links = [
   {
@@ -13,6 +13,11 @@ const links = [
     text: "My Earnings",
     image: <CircleDollarSignIcon className="h-6 w-6" />,
 
+  },
+  {
+    href: "/creator/wallet",
+    text: "Wallet",
+    image: <WalletIcon className="h-6 w-6" />,
   },
 ];
 

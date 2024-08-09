@@ -89,7 +89,7 @@ const PurchaseProductCard = ({ courseNftAddress }: any) => {
               </div>
             </div>
             <div className="flex justify-between items-center">
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground">
                 {product.description}
               </p>
               <Button onClick={() => handleDownload()} className="bg-green-600 hover:bg-green-400">
