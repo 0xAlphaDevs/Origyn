@@ -10,7 +10,7 @@ const MyPurchases = () => {
         <p className="text-3xl font-medium">My Purchases</p>
         <div className='relative'>
           <SearchIcon className='text-muted-foreground h-6 w-4 absolute top-2 left-2' />
-          <Input placeholder='     Search products ...' className='w-72' />
+          <Input placeholder='Search products ...' className='w-72 pl-8' />
         </div>
       </div>
       <PurchaseProductCard />
