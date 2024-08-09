@@ -13,7 +13,7 @@ interface Product {
 
 }
 
-const EarningsProductCard = ({ ProductNftAddress }: any) => {
+const EarningsProductCard = ({ ProductId }: any) => {
   const { address } = useAccount();
   const [product, setProduct] = React.useState<Product>({
 
@@ -56,7 +56,7 @@ const EarningsProductCard = ({ ProductNftAddress }: any) => {
 
   // if (readContractsLoading) {
   //   return (
-  //     <Card key={ProductNftAddress} className="shadow-md">
+  //     <Card key={ProductId} className="shadow-md">
   //       <CardContent className="flex justify-between items-center pt-4">
   //         <div className="flex flex-col gap-4">
   //           <Skeleton className="w-36 h-4 rounded-lg " />
