@@ -2,11 +2,12 @@
 
 import React from 'react';
 import { useRouter, useParams } from "next/navigation";
-import { MoveLeftIcon } from 'lucide-react';
+import { CrossIcon, MoveLeftIcon, OctagonAlertIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { products } from '@/lib/dummyData';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
+import ViewProductAttestation from '@/components/user/ViewProductAttestation';
 
 const Productview = () => {
   const router = useRouter();
@@ -30,14 +31,17 @@ const Productview = () => {
           </div>
           <div></div>
         </div>
-        <p className='text-red-500 text-center mt-20'>Product not found</p>
+        <div className='flex flex-col gap-2 justify-center items-center mt-40'>
+          <OctagonAlertIcon className='h-12 w-12 text-red-500' />
+          <p className='text-red-500 text-center text-2xl font-bold'>Product not found</p>
+        </div>
       </div>
     );
   }
 
   return (
     <div className='py-8'>
-      <div className='flex justify-between items-center mb-8'>
+      <div className='flex justify-between items-center mb-20'>
         <div className="cursor-pointer mr-2" onClick={handleBackClick}>
           <MoveLeftIcon className="h-6 w-6" />
         </div>
@@ -46,54 +50,41 @@ const Productview = () => {
         </div>
         <div></div>
       </div>
-      {/* <div>
-        <div className='flex justify-between pb-4'>
-          <p className='font-bold text-xl'>{product.name}</p>
-          <div className='flex gap-2'>
-            <p className='font-semibold text-lg'>Product_ID : </p>
-            <Badge>{product.id}</Badge>
+
+      <div className='flex justify-between items-center mb-8'>
+        <div className="text-2xl md:text-6xl font-bold ">{product.name}</div>
+        <div className='flex gap-4 flex-col'>
+          <div className='flex gap-2 '>
+            <p className='font-medium text-md'>Product_ID : </p>
+            <Badge >{product.id}</Badge>
+          </div>
+          <div className='flex gap-2 items-center'>
+            <p className='font-medium text-md'>Product Price : </p>
+            <p className='font-semibold text-lg'> {product.price} USD</p>
           </div>
         </div>
-        <div className='w-full h-96 relative'>
-          <Image
-            src={product.src}
-            alt={product.name}
-            fill
-            className='rounded-lg object-cover shadow-sm'
-            quality={100}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+      </div>
+
+      <div className="group bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all">
+        <Image
+          src={product.src}
+          width={400}
+          height={400}
+          alt="NFT Collection"
+          className="w-full h-44 object-cover transition-transform"
+          style={{ aspectRatio: "400/400", objectFit: "cover" }}
+        />
+        <div className="p-4 flex justify-center">
+          <p className="text-md text-muted-foreground">
+            {product.description}
+          </p>
         </div>
-        <p className='text-muted-foreground text-center py-2'>{product.description}</p>
-        <Button>Purchase Product</Button>
-      </div> */}
-      <section className="w-full py-10 bg-gradient-to-r from-[#9561e8] to-[#e964a7] overflow-hidden">
-        <div className="container px-4 md:px-6 grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="flex flex-col gap-4 justify-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-white">{product.name}</h1>
-            <p className="text-lg md:text-xl text-white/80">
-              {product.description}
-            </p>
-            <div className='flex gap-2 text-white'>
-              <p className='font-semibold text-lg'>Product_ID : </p>
-              <Badge className='bg-violet-950'>{product.id}</Badge>
-            </div>
-            <div className='w-full'>
-              <Button className='bg-violet-900 w-full'>Purchase Product</Button>
-            </div>
-          </div>
-          <div className="flex justify-end">
-            <Image
-              src={product.src}
-              width={400}
-              height={400}
-              alt="Hero NFT"
-              className="max-w-full h-auto rounded-lg shadow-lg"
-              style={{ aspectRatio: "600/600", objectFit: "cover" }}
-            />
-          </div>
-        </div>
-      </section>
+      </div>
+
+      <div className='flex justify-center gap-4 items-center py-10'>
+        <Button className='font-bold text-xl'>Purchase Product</Button>
+        <ViewProductAttestation />
+      </div>
     </div>
   )
 }
