@@ -28,6 +28,7 @@ const Productview = () => {
           <div className='text-3xl font-medium'>
             Product Overview
           </div>
+          <div></div>
         </div>
         <p className='text-red-500 text-center mt-20'>Product not found</p>
       </div>

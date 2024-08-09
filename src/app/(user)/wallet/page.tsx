@@ -74,7 +74,7 @@ const UserWallet = () => {
           </Button>
         ) : (
           <Button onClick={handleMint} className="text-lg">
-            Mint 100
+            Mint 100 USD
           </Button>
         )}
       </div>
